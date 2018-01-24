@@ -123,62 +123,27 @@ var lowestCommonAncestor = function(array, child1, child2) {
   roots = Object.keys(roots);
   var first = false;
   var second = false;
-  var lca;
   var innerFunction = function(node) {
     if (node === child1) {
       first = true;
     } else if (node === child2) {
       second = true;
     }
-
-  }
-  for (var i = 0; i < roots.length; i++) {
-    var result = helper(parentToChildren, roots[i], child1, child2);
-    console.log('this is the foundFirst', result.foundFirst, 'this is the foundSecond', result.foundSecond);
-    if (result.foundFirst && result.foundSecond) {
-      return true;
+    var children = parentToChildren[node] || [];
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      innerFunction(child);
     }
   }
-  return false;
+  for (var i = 0; i < roots.length; i++) {
+    var node = roots[i];
+    innerFunction(node);
+    if (first && second) {
+      return node;
+    }
+  }
+  return null;
 }
-
-// var commonAncestors = function(array, child1, child2) {
-//     var object = {};
-//     var root = {};
-//     var result = false;
-//     var first = false;
-//     var second = false;
-//     var lca = null;
-
-//     var innerFunction = function(node) {
-
-//       children.forEach(child, innerFunction);
-//       if (lca !== null) {
-//         return;
-//       }
-//       if (node == child1) {
-//         first = true;
-//       }
-//       if (node == child2) {
-//         second = true;
-//       }
-//       if (first && second) {
-//         lca = node;
-//       }
-//       // this requires a lot of backwards thinking
-//     }
-
-
-//     for (var root : roots) {
-//       innerFunction(root);
-//       if (lca) {
-//         return lca;
-//       }
-//       lca = null;
-//     }
-
-//     return null;
-// }
 
 // // if you return something, I would use both return and a closure'd variable
 
