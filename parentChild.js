@@ -177,6 +177,9 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
       innerFunction(child);
+      if (first && second) {
+        result = result || node;
+      }
     }
   }
   for (var i = 0; i < roots.length; i++) {
