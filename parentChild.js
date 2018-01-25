@@ -5,12 +5,6 @@
 //      /\   /\
 //      D E  F G
 
-// D, G -> A
-// B, C -> A
-// B, D -> B * easy to forget about
-// F, G -> C
-
-
 var example = [[1, 2], [1, 3]];
 
 var helper = function(parentToChildren, node, child1, child2) {
@@ -95,17 +89,7 @@ var commonAncestors2 = function(array, child1, child2) {
   return false;
 }
 
-console.log(commonAncestors2(example, 2, 3));
-
-// find the LCA (lowest common ancestor) using a closure'd variable (if commonAncestors returns true, and the variable has not been set, set the variable to the node, otherwise don't set it)
-// recursive function: first call recursively for children, then call commonAncestors on yourself, then we're good
-// CS: tree traversals: inorder (left, root, right), preorder (root, left, right), postorder (first left, then right, then root)
-
-// using commonAncestors: using return, either return node or true
-// postorder: first call left/right, if they returned a node, return that. afterwards, call commonAncestors on self, and return if true or return null
-
-// the idea for O(n)
-
+//--------------------Below are function responsible for obtaining lowest common parent-----------
 
 var helper2 = function(parentToChildren, node, child1, child2) {
   var foundFirst = node === child1;
@@ -117,10 +101,9 @@ var helper2 = function(parentToChildren, node, child1, child2) {
     foundFirst = foundFirst || result.foundFirst;
     foundSecond = foundSecond || result.foundSecond;
     if (foundFirst && foundSecond) {
-      lca = result.lca || node;
+      !!lca ? null : lca = result.lca || node;
     }
   }
-  console.log('this is the foundfirst', foundFirst, 'this is the foundSecond', foundSecond);
   return { foundFirst, foundSecond, lca };
 }
 
@@ -143,7 +126,7 @@ var lowestCommonAncestor = function(array, child1, child2) {
     var rootNode = Number(roots[i]);
     var result = helper2(parentToChildren, rootNode, child1, child2);
     if (result.foundFirst && result.foundSecond) {
-      return result.lca || rootNode;
+      return result.lca;
     }
   }
   return null;
@@ -166,7 +149,7 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
   roots = Object.keys(roots);
   var first = false;
   var second = false;
-  var result = null;
+  var result = null;0
   var innerFunction = function(node) {
     if (node === child1) {
       first = true;
@@ -192,9 +175,9 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
 var example = [[1, 2], [1, 3]];
 var example2 = [[1,2], [1,3], [2, 4], [2, 5]];
 
-console.log('this should return 1', lowestCommonAncestor2(example, 2, 3));
-console.log('this should return 1', lowestCommonAncestor2(example, 1, 3));
-console.log('this should return 2', lowestCommonAncestor2(example2, 4, 5));
+console.log('this should return 1', lowestCommonAncestor(example, 2, 3));
+console.log('this should return 1', lowestCommonAncestor(example, 1, 3));
+console.log('this should return 2', lowestCommonAncestor(example2, 4, 5));
 
 
 
