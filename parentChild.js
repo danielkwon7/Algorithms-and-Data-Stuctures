@@ -149,8 +149,9 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
   roots = Object.keys(roots);
   var first = false;
   var second = false;
-  var result = null;0
+  var result = null;
   var innerFunction = function(node) {
+    console.log('this is the node', node);
     if (node === child1) {
       first = true;
     } else if (node === child2) {
@@ -158,7 +159,7 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
     }
     var children = parentToChildren[node] || [];
     for (var i = 0; i < children.length; i++) {
-      var child = children[i];
+      var child = Number(children[i]);
       innerFunction(child);
       if (first && second) {
         result = result || node;
@@ -168,6 +169,8 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
   for (var i = 0; i < roots.length; i++) {
     var node = Number(roots[i]);
     innerFunction(node);
+    first = false;
+    second = false;
   }
   return result;
 }
@@ -178,22 +181,6 @@ var example2 = [[1,2], [1,3], [2, 4], [2, 5]];
 console.log('this should return 1', lowestCommonAncestor(example, 2, 3));
 console.log('this should return 1', lowestCommonAncestor(example, 1, 3));
 console.log('this should return 2', lowestCommonAncestor(example2, 4, 5));
-
-
-
-
-// // if you return something, I would use both return and a closure'd variable
-
-// var lca = null;
-// function helper(parentToChildren, node, child1, child2) {
-//   var foundFirst = node === child1;
-//   var foundSecond = node === child2;
-//   var children = parentToChildren[node] || [];
-//   for (var i = 0; i < children.length; i++) {
-//     var result = helper(parentToChildren, children[i]);
-//     foundFirst = foundFirst || result.foundFirst;
-//     foundSecond = foundSecond || result.foundSecond;
-//   }
-//   // if foundFirst && foundSecond && lca === null, lca = node
-//   return { foundFirst, foundSecond };
-// }
+console.log('this should return 1', lowestCommonAncestor2(example, 2, 3));
+console.log('this should return 1', lowestCommonAncestor2(example, 1, 3));
+console.log('this should return 2', lowestCommonAncestor2(example2, 4, 5));
