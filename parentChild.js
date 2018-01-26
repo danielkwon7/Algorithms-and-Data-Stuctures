@@ -5,7 +5,6 @@
 //      /\   /\
 //      D E  F G
 
-var example = [[1, 2], [1, 3]];
 
 var helper = function(parentToChildren, node, child1, child2) {
   var foundFirst = node === child1;
@@ -89,7 +88,7 @@ var commonAncestors2 = function(array, child1, child2) {
   return false;
 }
 
-//--------------------Below are function responsible for obtaining lowest common parent-----------
+//--------------------Below are functions responsible for obtaining lowest common parent-----------
 
 var helper2 = function(parentToChildren, node, child1, child2) {
   var foundFirst = node === child1;
