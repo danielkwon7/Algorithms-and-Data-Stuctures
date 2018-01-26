@@ -98,3 +98,48 @@ var ownershipIterative = function(array) {
   return result;
 }
 
+var ownershipIterative2 = function(array) {
+  var object = {};
+  var children = {};
+  var root;
+  var result = [];
+  for (var i = 0; i < array.length; i++) {
+    var parent = array[i][0];
+    var child = array[i][1];
+    children[child] = true;
+    if (!object[parent]) {
+      object[parent] = [child];
+    } else {
+      object[parent].push(child);
+    }
+  }
+  Object.keys(object).forEach(function(node) {
+    if (!children[node]) {
+      root = node;
+    }
+  })
+  var depth = 0;
+  var stack = [root];
+  while (stack.length) {
+    var length = stack.length;
+    var el = stack.pop();
+    if (el === null) {
+      depth--;
+      continue;
+    }
+    result.push([el, depth]);
+    var children = object[el] || [];
+    var childrenLength = children.length;
+    if (!childrenLength) {
+      continue;
+    }
+    stack.push(null);
+    depth++;
+    for (var i = childrenLength - 1; i >= 0; i--) {
+      var child = children[i];
+      stack.push(child);
+    }
+  }
+  return result;
+}
+
