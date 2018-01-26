@@ -51,7 +51,52 @@ var commonAncestors = function(array, child1, child2) {
 console.log(commonAncestors(example, 2, 3));
 
 var commonAncestor = function(array, child1, child2) {
-  var
+  var parentToChildren = {};
+  var roots = {};
+  for (var i = 0; i < array.length; i++) {
+    var parent = array[i][0];
+    var child = array[i][1];
+    if (roots[parent] === undefined) {
+      roots[parent] = true;
+    } else {
+      roots[parent] = roots[parent] && true;
+    }
+    roots[child] = false;
+    if (!parentToChildren[parent]) {
+      parentToChildren[parent] = [child];
+    } else {
+      parentToChildren[parent].push(child);
+    }
+  }
+  roots = Object.keys(roots).filter(function(node) {
+    return roots[node] === true;
+  });
+  return roots;
+
+  var first = false;
+  var second = false;
+  var recurse = function(node) {
+    if (node === child1) {
+      first = true;
+    } else if (node === child2) {
+      second = true;
+    }
+    var children = parentToChildren[node] || [];
+    for (var i = 0; i < children.length; i++) {
+      innerFunction(children[i]);
+    }
+  }
+  for (var i = 0; i < roots.length; i++) {
+    var rootNode = roots[i];
+    recurse(rootNode);
+    if (first && second) {
+      return true;
+    } else {
+      first = false;
+      second = false;
+    }
+  }
+  return false;
 }
 
 var commonAncestors2 = function(array, child1, child2) {
