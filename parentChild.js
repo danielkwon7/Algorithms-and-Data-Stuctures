@@ -24,16 +24,21 @@ var commonAncestors = function(array, child1, child2) {
   for (var i = 0; i < array.length; i++) {
     var parent = array[i][0];
     var child = array[i][1];
-    roots[parent] = true;
-    delete roots[child];
+    if (roots[parent] === undefined) {
+      roots[parent] = true;
+    } else {
+      roots[parent] = roots[parent] && true;
+    }
+    roots[child] = false;
     if (!parentToChildren[parent]) {
       parentToChildren[parent] = [child];
     } else {
       parentToChildren[parent].push(child);
     }
   }
-  console.log('this is the parentChildren', parentToChildren);
-  roots = Object.keys(roots);
+  roots = Object.keys(roots).filter(function(node) {
+    return roots[node] === true;
+  });
   for (var i = 0; i < roots.length; i++) {
     var result = helper(parentToChildren, roots[i], child1, child2);
     if (result.foundFirst && result.foundSecond) {
@@ -45,21 +50,31 @@ var commonAncestors = function(array, child1, child2) {
 
 console.log(commonAncestors(example, 2, 3));
 
+var commonAncestor = function(array, child1, child2) {
+  var
+}
+
 var commonAncestors2 = function(array, child1, child2) {
   var parentToChildren = {};
   var roots = {};
   for (var i = 0; i < array.length; i++) {
     var parent = array[i][0];
     var child = array[i][1];
-    roots[parent] = true;
-    delete roots[child];
+    if (roots[parent] === undefined) {
+      roots[parent] = true;
+    } else {
+      roots[parent] = roots[parent] && true;
+    }
+    roots[child] = false;
     if (!parentToChildren[parent]) {
       parentToChildren[parent] = [child];
     } else {
       parentToChildren[parent].push(child);
     }
   }
-  roots = Object.keys(roots);
+  roots = Object.keys(roots).filter(function(node) {
+    return roots[node] === true;
+  });
   var first = false;
   var second = false;
   var innerFunction = function(node) {
@@ -112,15 +127,21 @@ var lowestCommonAncestor = function(array, child1, child2) {
   for (var i = 0; i < array.length; i++) {
     var parent = array[i][0];
     var child = array[i][1];
-    roots[parent] = true;
-    delete roots[child];
+    if (roots[parent] === undefined) {
+      roots[parent] = true;
+    } else {
+      roots[parent] = roots[parent] && true;
+    }
+    roots[child] = false;
     if (!parentToChildren[parent]) {
       parentToChildren[parent] = [child];
     } else {
       parentToChildren[parent].push(child);
     }
   }
-  roots = Object.keys(roots);
+  roots = Object.keys(roots).filter(function(node) {
+    return roots[node] === true;
+  });
   for (var i = 0; i < roots.length; i++) {
     var rootNode = Number(roots[i]);
     var result = helper2(parentToChildren, rootNode, child1, child2);
@@ -137,15 +158,21 @@ var lowestCommonAncestor2 = function(array, child1, child2) {
   for (var i = 0; i < array.length; i++) {
     var parent = array[i][0];
     var child = array[i][1];
-    roots[parent] = true;
-    delete roots[child];
+    if (roots[parent] === undefined) {
+      roots[parent] = true;
+    } else {
+      roots[parent] = roots[parent] && true;
+    }
+    roots[child] = false;
     if (!parentToChildren[parent]) {
       parentToChildren[parent] = [child];
     } else {
       parentToChildren[parent].push(child);
     }
   }
-  roots = Object.keys(roots);
+  roots = Object.keys(roots).filter(function(node) {
+    return roots[node] === true;
+  });
   var first = false;
   var second = false;
   var result = null;
