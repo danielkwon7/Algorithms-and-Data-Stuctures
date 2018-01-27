@@ -172,6 +172,66 @@ var lowestCommonAncestor = function(array, child1, child2) {
   for (var i = 0; i < array.length; i++) {
     var parent = array[i][0];
     var child = array[i][1];
+  }
+}
+
+var lowestCommonAncestor = function(array, child1, child2) {
+  var parentToChildren = {};
+  var roots = {};
+  for (var i = 0; i < array.length; i++) {
+    var parent = array[i][0];
+    var child = array[i][1];
+    if (roots[parent] === undefined) {
+      roots[parent] = true;
+    } else {
+      roots[parent] = roots[parent] && true;
+    }
+    roots[child] = false;
+    if (!parentToChildren[parent]) {
+      parentToChildren[parent] = [child];
+    } else {
+      parentToChildren[parent].push(child);
+    }
+  }
+  roots = Object.keys(roots).filter(function(node) {
+    return roots[node] === true;
+  })
+  var foundFirst = false;
+  var foundSecond = false;
+  var result;
+  var innerFunction = function(node) {
+    if (node === child1) {
+      foundFirst = true;
+    }
+    if (node === child2) {
+      foundSecond = true;
+    }
+    var children = parentToChildren[node] || [];
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      innerFunction(child);
+      if (foundFirst && foundSecond) {
+        result = result || node;
+      }
+    }
+  }
+
+  for (var i = 0; i < roots.length; i++) {
+    var root = roots[i];
+    innerFunction(root);
+    if (foundFirst && foundSecond) {
+      break;
+    }
+  }
+  return result;
+}
+
+var lowestCommonAncestor = function(array, child1, child2) {
+  var parentToChildren = {};
+  var roots = {};
+  for (var i = 0; i < array.length; i++) {
+    var parent = array[i][0];
+    var child = array[i][1];
     if (roots[parent] === undefined) {
       roots[parent] = true;
     } else {
