@@ -12,7 +12,7 @@ BinaryHeap.prototype.length = function() {
 BinaryHeap.prototype._getLesserChildIndex = function(parentIndex) {
   var childIndices = [parentIndex * 2 + 1, parentIndex * 2 + 2]
   .filter((index) => {
-    return index < this.length;
+    return index < this.length();
   });
   var length = childIndices.length;
   if (!length) {
@@ -38,7 +38,7 @@ BinaryHeap.prototype._swap = function(index, parentIndex) {
 
 BinaryHeap.prototype.insert = function(node) {
   this._heap.push(node);
-  var index = this.length - 1;
+  var index = this.length() - 1;
   var parentIndex = Math.floor((index - 1) / 2);
   while (index > 0 && (this._compare(index, parentIndex))) {
     this._swap(index, parentIndex);
@@ -48,14 +48,27 @@ BinaryHeap.prototype.insert = function(node) {
 }
 
 BinaryHeap.prototype.removeRoot = function() {
-  this._swap(this.length - 1, 0);
+  this._swap(this.length() - 1, 0);
   var originalRoot = this._heap.pop();
   var temporaryRootIndex = 0;
   var lesserChildIndex = this._getLesserChildIndex(temporaryRootIndex);
   while (lesserChildIndex && this._compare(lesserChildIndex, temporaryRootIndex)) {
     this._swap(lesserChildIndex, temporaryRootIndex);
     temporaryRootIndex = lesserChildIndex;
-    lesserChildIndex = this._getLesserChildren(temporaryRootIndex);
+    lesserChildIndex = this._getLesserChildIndex(temporaryRootIndex);
   }
   return originalRoot;
 }
+
+var dan = new BinaryHeap;
+dan.insert(1);
+dan.insert(2);
+dan.insert(3);
+dan.insert(4);
+dan.insert(5);
+dan.insert(0);
+console.log('This is the current heap', dan._heap);
+console.log('This should return 0', dan._heap[0]);
+dan.removeRoot();
+console.log('This should return 1', dan._heap[0]);
+console.log('This is the current heap', dan._heap);
