@@ -1,3 +1,4 @@
+
 Array.prototype.isSubsetOf = function(arr) {
   var object = {};
   for (var i = 0; i < arr.length; i++) {
@@ -19,4 +20,3 @@ var leo = [111];
 console.log(dan.isSubsetOf(esther) === true ? 'PASS' : 'GG');
 console.log(david.isSubsetOf(esther) === true ? 'PASS' : 'GG');
 console.log(leo.isSubsetOf(dan) === true ? 'GG' : 'PASS');
-
