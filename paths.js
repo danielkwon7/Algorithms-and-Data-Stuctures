@@ -33,21 +33,34 @@ var cheapestPath = function(matrix) {
   var rowLength = matrix.length;
   var colLength = matrix[0].length;
   for (var i = 0; i < rowLength; i++) {
-    var neighborRow = i - 1;
     for (var j = 0; j < colLength; j++) {
-      var neighborCol = j - 1;
-      var upNeighbor = matrix[neighborRow, j] || 0;
-      var leftNeighbor = matrix[i, neighborCol] || 0;
       var coordinates = JSON.stringify([i, j]);
+      var neighborRow = i - 1;
+      var neighborCol = j - 1;
+      var upCoordinates = JSON.stringify([i, neighborCol]);
+      var leftCoordinates = JSON.stringify([neighborRow, j]);
+      var upNeighbor = object[upCoordinates];
+      var leftNeighbor = object[leftCoordinates]
       var cost = matrix[i][j];
-      if (upNeighbor && leftNeighbor) {
+      if (upNeighbor !== undefined && leftNeighbor !== undefined) {
         object[coordinates] = Math.min(upNeighbor, leftNeighbor) + cost;
       } else {
-        object[coordinates] = Math.max(upNeighbor, leftNeighbor) + cost;
+        object[coordinates] = (upNeighbor || leftNeighbor || 0) + cost;
       }
     }
   }
+  console.log(object);
+  return object[JSON.stringify([rowLength - 1, colLength - 1])];
 }
+
+//[1,2,3]
+//[4,5,6]
+//[7,8,9]
+
+var example1 = [[1,1], [1,1]];
+var example2 = [[1,2,3], [4,5,6], [7,8,9]];
+console.log(cheapestPath(example1) === 2 ? "PASS" : "GG");
+console.log(cheapestPath(example2) === 1 + 2 + 3 + 6 + 9 ? "PASS" : "GG")
 
 
 
