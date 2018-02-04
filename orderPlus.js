@@ -4,8 +4,13 @@
 
 // An "axis-aligned plus sign of 1s of order k" has some center grid[x][y] = 1 along with 4 arms of length k-1 going up, down, left, and right, and made of 1s. This is demonstrated in the diagrams below. Note that there could be 0s or 1s beyond the arms of the plus sign, only the relevant area of the plus sign is checked for 1s.
 
-var locateCenter = function(C, mines) {
+var locateCenters = function(C, length) {
+  for (var i = C - 1; i < length - C - 1; i++) {
+    for (var j = C - 1; j < length - C - 1; j++) {
 
+    }
+  }
+ }
 }
 
 var orderOfLargestPlusSign = function(N, mines) {
