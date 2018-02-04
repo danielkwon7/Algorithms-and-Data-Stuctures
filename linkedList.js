@@ -42,3 +42,26 @@ LinkedList.prototype.removeHead = function() {
   }
   return head ? head.value : null;
 }
+
+
+//implement hasCycle for a linkedList
+//with linear time
+//constant space
+//do not mutate the original nodes
+
+var hasCycle = function(linkedList) {
+  var head = linkedList.head;
+  var slow = head;
+  var fast = head.next;
+  var counter = 0;
+  while (fast) {
+    fast = fast.next;
+    if (fast === slow) {
+      return true;
+    }
+    if (counter % 2 === 1) {
+      slow = slow.next;
+    }
+  }
+  return false;
+}
