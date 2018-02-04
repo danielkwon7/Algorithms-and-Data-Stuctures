@@ -61,6 +61,7 @@ var hasCycle = function(linkedList) {
     if (counter % 2 === 1) {
       slow = slow.next;
     }
+    counter++;
   }
   return false;
 }
