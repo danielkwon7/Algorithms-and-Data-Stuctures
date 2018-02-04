@@ -18,7 +18,7 @@ var isPalindrome = function(string) {
 var isPalindrome2 = function(string) {
   var half;
 
-  string = string.lowerCase().split('').filter(function(letter) {
+  string = string.toLowerCase().split('').filter(function(letter) {
     if(letter !== ' ') {
       return true;
     }
