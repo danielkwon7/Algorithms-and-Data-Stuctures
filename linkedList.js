@@ -53,7 +53,6 @@ var hasCycle = function(linkedList) {
   var head = linkedList.head;
   var slow = head;
   var fast = head.next;
-  var counter = 0;
   while (fast) {
     fast = fast.next;
     if (fast === slow) {
