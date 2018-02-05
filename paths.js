@@ -24,6 +24,24 @@ var paths = function(matrix) {
   return counter;
 }
 
+//now let's implement robotPaths that can traverse all directions and cannot visit the same spot twice
+var makeBoard = function(n) {
+  var board = [];
+  for (var i = 0; i < n; i++) {
+    board.push([]);
+    for (var j = 0; j < n; j++) {
+      board[i].push(false);
+    }
+  }
+  board.togglePiece = function(i, j) {
+    this[i][j] = !this[i][j];
+  }
+  board.hasBeenVisited = function(i, j) {
+    return this[i][j];
+  }
+  return board;
+}
+
 //given a matrix of numbers, find the cheapest path from the top left corner to the bottom right corner where its cost is determined by the sum of all traversed number (including the start and the end)
 
 //we can only traverse right or down to reach the destination
