@@ -42,6 +42,31 @@ var makeBoard = function(n) {
   return board;
 }
 
+var robotPaths = function(n, board, i, j) {
+  if (!board) {
+    board = makeBoard(n);
+    i = j = 0;
+  }
+
+  if (i < 0 || i >= n || j < 0 || j >= n || board.hasBeenVisited(i, j)) {
+    return 0;
+  }
+
+  if (i === n - 1 && j === n - 1) {
+    return 1;
+  }
+
+  board.togglePiece(i, j);
+
+  var result = robotPaths(n, board, i, j + 1) +
+  robotPaths(n, board, i, j - 1) +
+  robotPaths(n, board, i + 1, j) +
+  robotPaths(n, board, i - 1, j);
+
+  board.togglePiece(i, j);
+  return result;
+}
+
 //given a matrix of numbers, find the cheapest path from the top left corner to the bottom right corner where its cost is determined by the sum of all traversed number (including the start and the end)
 
 //we can only traverse right or down to reach the destination
