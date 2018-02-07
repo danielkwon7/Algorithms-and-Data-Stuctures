@@ -67,6 +67,32 @@ var robotPaths = function(n, board, i, j) {
   return result;
 }
 
+//mobile patterns
+//given a 3 x 3 matrix, how many patterns can be made given the specified length (not including the starting node) and the fact that wec annot traverse a previously stepped upon node
+
+var mobilePatterns = function(pathLength) {
+  var steppedNodes = {};
+  var result = 0;
+  var counter = 0;
+  var coordinates = [[0, 0], [0, 1], [1, 1]];
+  var recurse = function(i, j, steppedNodes) {
+
+  }
+
+  for (var i = 0; i < coordinates.length; i++) {
+    var row = coordinates[i][0];
+    var col = coordinates[i][1];
+    recurse(row, col, steppedNodes);
+    if (i === 0 || i === 1) {
+      result += 4 * counter;
+      counter = 0;
+    } else {
+      return result + counter;
+    }
+  }
+
+}
+
 //given a matrix of numbers, find the cheapest path from the top left corner to the bottom right corner where its cost is determined by the sum of all traversed number (including the start and the end)
 
 //we can only traverse right or down to reach the destination
