@@ -72,25 +72,35 @@ var robotPaths = function(n, board, i, j) {
 
 var mobilePatterns = function(pathLength) {
   var steppedNodes = {};
+  var potentialCoordinates = {};
   var result = 0;
-  var counter = 0;
-  var coordinates = [[0, 0], [0, 1], [1, 1]];
-  var recurse = function(i, j, steppedNodes) {
-
-  }
-
-  for (var i = 0; i < coordinates.length; i++) {
-    var row = coordinates[i][0];
-    var col = coordinates[i][1];
-    recurse(row, col, steppedNodes);
-    if (i === 0 || i === 1) {
-      result += 4 * counter;
-      counter = 0;
-    } else {
-      return result + counter;
+  potentialCoordinates[JSON.stringify([0, 0])] = [[0, 1], [1, 0], [1, 1], [2, 1], [1, 2]];
+  potentialCoordinates[JSON.stringify([0, 1])] = [[0, 0], [0, 2], [1, 1], [1, 0], [1, 2], [2, 1], [2, 2]]
+  potentialCoordinates[JSON.stringify([1, 1])] = [[0, 0], [1, 0], [0, 1], [2, 0], [2, 1], [0, 2], [1, 2], [2, 2]];
+  var recurse = function(i, j, length, steppedNodes) {
+    var counter = 0;
+    length++;
+    var coordinates = (potentialCoordinates[JSON.stringify([i, j])] || []).filter(function(coordinates) {
+      if (!steppedNodes[JSON.stringify(coordinates)]) {
+        return true;
+      }
+    });
+    var newSteppedNodes = Object.assign({}, steppedNodes);
+    if (length === pathLength) {
+      return 1;
     }
+    if (!coordinates.length) {
+      return 0;
+    }
+    for (var i = 0; i < coordinates.length; i++) {
+      var coordinate = coordinates[i];
+      var row = coordinate[0];
+      var col = coordinate[1];
+      counter += recurse(row, col, length, newSteppedNodes);
+    }
+    return counter;
   }
-
+  return 4 * recurse(0, 0, 0, {}) + 4 * recurse(0, 1, 0, {}) + recurse(1, 1, 0, {});
 }
 
 //given a matrix of numbers, find the cheapest path from the top left corner to the bottom right corner where its cost is determined by the sum of all traversed number (including the start and the end)
