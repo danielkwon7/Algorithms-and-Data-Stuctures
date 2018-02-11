@@ -1,7 +1,11 @@
 
+var matrix = Array(9);
+for (var i = 0; i < 9; i++) {
+  matrix[i] = Array(9);
+}
+matrix[0][0] = 1;
 
 var sudoku = function(matrix) {
-
   var innerFunction = function(row, col) {
     var potentialNumbers = {
       1: true,
@@ -45,6 +49,30 @@ var sudoku = function(matrix) {
         }
       }
     }
-
+    potentialNumbers = Object.keys(potentialNumbers);
+    if (!potentialNumbers.length || row > 8 || col > 8) {
+      return;
+    } else if (row === 8 && col === 8) {
+      return matrix;
+    }
+    for (var i = 0; i < potentialNumbers.length; i++) {
+      var potentialNumber = potentialNumbers[i];
+      matrix[row][col] = Number(potentialNumber);
+      var result;
+      if (col === 8) {
+        result = innerFunction(row + 1, 0);
+      } else {
+        result = innerFunction(row, col + 1);
+      }
+      if (result) {
+        return result;
+      } else {
+        matrix[row][col] = undefined;
+        continue;
+      }
+    }
   }
+  return innerFunction(0, 0);
 }
+
+console.log(sudoku(matrix));
