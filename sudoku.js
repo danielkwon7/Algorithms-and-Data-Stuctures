@@ -1,9 +1,14 @@
-
 var matrix = Array(9);
 for (var i = 0; i < 9; i++) {
   matrix[i] = Array(9);
 }
 matrix[0][0] = 1;
+matrix[0][1] = 2;
+matrix[0][2] = 3;
+matrix[0][3] = 4;
+matrix[0][4] = 5;
+matrix[0][5] = 6;
+matrix[1][1] = 4;
 
 var sudoku = function(matrix) {
   var innerFunction = function(row, col) {
@@ -18,7 +23,7 @@ var sudoku = function(matrix) {
       8: true,
       9: true,
     };
-    for (j = 0; j < 9; j++) {
+    for (var j = 0; j < 9; j++) {
       if (j === col) {
         continue;
       }
@@ -36,8 +41,8 @@ var sudoku = function(matrix) {
         delete potentialNumbers[number];
       }
     }
-    var rowBlock = Math.floor(row / 3);
-    var colBlock = Math.floor(col / 3);
+    var rowBlock = Math.floor(row / 3) * 3;
+    var colBlock = Math.floor(col / 3) * 3;
     for (var i = rowBlock; i < rowBlock + 3; i++) {
       for (var j = colBlock; j < colBlock + 3; j++) {
         if (i === row && j === col) {
@@ -50,9 +55,10 @@ var sudoku = function(matrix) {
       }
     }
     potentialNumbers = Object.keys(potentialNumbers);
-    if (!potentialNumbers.length || row > 8 || col > 8) {
+    if (!potentialNumbers.length) {
       return;
     } else if (row === 8 && col === 8) {
+      matrix[row][col] = Number(potentialNumbers[0]);
       return matrix;
     }
     for (var i = 0; i < potentialNumbers.length; i++) {
@@ -66,10 +72,8 @@ var sudoku = function(matrix) {
       }
       if (result) {
         return result;
-      } else {
-        matrix[row][col] = undefined;
-        continue;
       }
+      // matrix[row][col] = undefined;
     }
   }
   return innerFunction(0, 0);
