@@ -12,9 +12,8 @@ var rotateMatrix = function(matrix) {
     for (var j = 0; j < colL; j++) {
       var el = matrix[i][j];
       result[j][rowC] = el;
-      rowC++
     }
-    rowC = 0;
+    rowC++;
   }
   return result;
 }
