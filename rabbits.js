@@ -14,11 +14,7 @@ var rabbits = function(answers) {
   for (var key in carrot) {
     var expected = Number(key) + 1;
     var count = carrot[key];
-    if (expected >= count) {
-      result += expected;
-    } else {
-      result += expected * ( Math.ceil(count / expected) );
-    }
+    result += expected * (Math.ceil(count / expected));
   }
   return result;
 }
@@ -35,5 +31,3 @@ var results3 = 4;
 console.log(rabbits(answers1) === results1 ? 'PASS' : 'GG');
 console.log(rabbits(answers2) === results2 ? 'PASS' : 'GG');
 console.log(rabbits(answers3) === results3 ? 'PASS' : 'GG');
-
-
