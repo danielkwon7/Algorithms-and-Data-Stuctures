@@ -32,3 +32,4 @@ var reversePolish = function(array) {
 
 var example = [2, 1, 12, 3, '/', '-', '+'];
 console.log(reversePolish(example) === -1);
+
