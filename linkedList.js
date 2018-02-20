@@ -65,3 +65,19 @@ var hasCycle = function(linkedList) {
   }
   return false;
 }
+
+//O(N) solution
+var hasCycle2 = function(linkedList) {
+  var head = linkedList;
+  var first = head;
+  var second = head;
+  while (second) {
+    first = linkedList.next;
+    second = linkedList.next.next;
+    if (first === second) {
+      return true;
+    }
+  }
+  return false;
+}
+
