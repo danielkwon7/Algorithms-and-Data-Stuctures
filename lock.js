@@ -13,7 +13,7 @@ Queue.prototype.enqueue = function(value) {
   }
 }
 
-var next = function(number, combination) {
+var next = function(combination) {
   var result = [];
   var nextNumber = {};
   var prevNumber = {};
@@ -36,5 +36,9 @@ var next = function(number, combination) {
 
 var openLock = function(deadends, target) {
   var queue = [];
+  var start = '0000';
+  var nextCom = next(start);
+  for (var i = 0; i < nextCom.length; i++) {
 
+  }
 }
